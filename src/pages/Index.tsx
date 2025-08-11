@@ -10,6 +10,7 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const [selectedPlan, setSelectedPlan] = useState('basic');
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeSection, setActiveSection] = useState('home');
 
   const analyticsData = [
     { name: 'Активные участники', value: 234, change: '+12%', color: 'bg-club-orange' },
@@ -49,6 +50,63 @@ const Index = () => {
           </p>
         </div>
 
+        {/* Main Navigation for Mini App */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <Button
+            onClick={() => setActiveSection('home')}
+            variant={activeSection === 'home' ? 'default' : 'outline'}
+            className={`h-20 flex flex-col items-center justify-center space-y-2 ${
+              activeSection === 'home' 
+                ? 'bg-club-orange hover:bg-club-orange/90 text-white' 
+                : 'border-club-orange/30 text-club-orange hover:bg-club-orange/10'
+            }`}
+          >
+            <Icon name="Home" className="w-6 h-6" />
+            <span className="text-sm font-medium">Главная</span>
+          </Button>
+
+          <Button
+            onClick={() => setActiveSection('profile')}
+            variant={activeSection === 'profile' ? 'default' : 'outline'}
+            className={`h-20 flex flex-col items-center justify-center space-y-2 ${
+              activeSection === 'profile' 
+                ? 'bg-club-teal hover:bg-club-teal/90 text-white' 
+                : 'border-club-teal/30 text-club-teal hover:bg-club-teal/10'
+            }`}
+          >
+            <Icon name="User" className="w-6 h-6" />
+            <span className="text-sm font-medium">Личный кабинет</span>
+          </Button>
+
+          <Button
+            onClick={() => setActiveSection('club')}
+            variant={activeSection === 'club' ? 'default' : 'outline'}
+            className={`h-20 flex flex-col items-center justify-center space-y-2 ${
+              activeSection === 'club' 
+                ? 'bg-club-blue hover:bg-club-blue/90 text-white' 
+                : 'border-club-blue/30 text-club-blue hover:bg-club-blue/10'
+            }`}
+          >
+            <Icon name="Users" className="w-6 h-6" />
+            <span className="text-sm font-medium">Наш клуб</span>
+          </Button>
+
+          <Button
+            onClick={() => setActiveSection('subscription')}
+            variant={activeSection === 'subscription' ? 'default' : 'outline'}
+            className={`h-20 flex flex-col items-center justify-center space-y-2 ${
+              activeSection === 'subscription' 
+                ? 'bg-gradient-to-r from-club-orange to-club-teal text-white' 
+                : 'border-primary/30 text-primary hover:bg-primary/10'
+            }`}
+          >
+            <Icon name="Crown" className="w-6 h-6" />
+            <span className="text-sm font-medium">Подписка</span>
+          </Button>
+        </div>
+
+        {/* Content based on active section */}
+        {activeSection === 'home' && (
         <Tabs defaultValue="dashboard" className="space-y-6">
           <TabsList className="grid w-full grid-cols-5 bg-white shadow-sm">
             <TabsTrigger value="dashboard" className="data-[state=active]:bg-club-orange data-[state=active]:text-white">
@@ -289,6 +347,176 @@ const Index = () => {
             </div>
           </TabsContent>
         </Tabs>
+        )}
+
+        {/* Profile Section */}
+        {activeSection === 'profile' && (
+          <div className="space-y-6">
+            <div className="text-center space-y-4">
+              <Icon name="User" className="w-16 h-16 text-club-teal mx-auto" />
+              <h2 className="text-2xl font-bold text-gray-900">Личный кабинет</h2>
+              <p className="text-gray-600">Управляйте своим профилем и настройками</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle>Профиль пользователя</CardTitle>
+                  <CardDescription>Основная информация о вас</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-club-teal/20 rounded-full flex items-center justify-center">
+                      <Icon name="User" className="w-8 h-8 text-club-teal" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">Анна Иванова</h3>
+                      <p className="text-gray-600">anna.ivanova@email.com</p>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-club-teal hover:bg-club-teal/90 text-white">
+                    Редактировать профиль
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle>Статистика</CardTitle>
+                  <CardDescription>Ваша активность в клубе</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex justify-between">
+                    <span>Посещено практик:</span>
+                    <Badge className="bg-club-orange text-white">47</Badge>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Дней в клубе:</span>
+                    <Badge className="bg-club-teal text-white">156</Badge>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Уровень:</span>
+                    <Badge className="bg-club-blue text-white">Продвинутый</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
+
+        {/* Club Section */}
+        {activeSection === 'club' && (
+          <div className="space-y-6">
+            <div className="text-center space-y-4">
+              <Icon name="Users" className="w-16 h-16 text-club-blue mx-auto" />
+              <h2 className="text-2xl font-bold text-gray-900">Наш клуб</h2>
+              <p className="text-gray-600">Новости, мероприятия и сообщество</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Icon name="Newspaper" className="w-5 h-5 text-club-blue" />
+                    Последние новости
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-3 bg-club-gray/50 rounded-lg">
+                      <h4 className="font-medium mb-1">Новая программа медитации</h4>
+                      <p className="text-sm text-gray-600">Запускаем 21-дневный курс осознанности</p>
+                      <span className="text-xs text-gray-500">2 часа назад</span>
+                    </div>
+                    <div className="p-3 bg-club-gray/50 rounded-lg">
+                      <h4 className="font-medium mb-1">Мастер-класс по йоге</h4>
+                      <p className="text-sm text-gray-600">Особенная практика в эту субботу</p>
+                      <span className="text-xs text-gray-500">5 часов назад</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-0 shadow-md">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Icon name="Calendar" className="w-5 h-5 text-club-orange" />
+                    Ближайшие мероприятия
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 p-3 bg-club-orange/10 rounded-lg">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-club-orange">15</div>
+                        <div className="text-xs text-gray-600">АВГ</div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium">Групповая медитация</h4>
+                        <p className="text-sm text-gray-600">19:00 - 20:30</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-club-teal/10 rounded-lg">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-club-teal">18</div>
+                        <div className="text-xs text-gray-600">АВГ</div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium">Йога на рассвете</h4>
+                        <p className="text-sm text-gray-600">07:00 - 08:30</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
+
+        {/* Subscription Section */}
+        {activeSection === 'subscription' && (
+          <div className="space-y-6">
+            <div className="text-center space-y-4">
+              <Icon name="Crown" className="w-16 h-16 text-primary mx-auto" />
+              <h2 className="text-2xl font-bold text-gray-900">Подписка</h2>
+              <p className="text-gray-600">Управление вашей подпиской и тарифами</p>
+            </div>
+
+            <Card className="border-2 border-primary/20 bg-gradient-to-r from-club-orange/5 to-club-teal/5">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold text-club-blue">Текущая подписка: Профессиональная</h3>
+                    <p className="text-gray-600">Действует до 15 сентября 2024</p>
+                    <div className="flex items-center gap-2">
+                      <Progress value={75} className="w-32" />
+                      <span className="text-sm text-gray-500">75% использовано</span>
+                    </div>
+                  </div>
+                  <Button className="bg-gradient-to-r from-club-orange to-club-teal text-white hover:opacity-90">
+                    Продлить подписку
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {pricingPlans.map((plan) => (
+                <Card key={plan.id} className="border-2 border-gray-200 hover:border-club-orange transition-colors">
+                  <CardHeader className="text-center">
+                    <CardTitle>{plan.name}</CardTitle>
+                    <div className="text-2xl font-bold text-club-blue">{plan.price}</div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full bg-club-orange hover:bg-club-orange/90 text-white">
+                      Выбрать
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
